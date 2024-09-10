@@ -1,38 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- Required title tag with af97a874 -->
-    <title>VIPUL AGRAWAL af97a874</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>af97a874 - Vipul Agrawal</title>
 </head>
 <body>
-    <h1>Welcome to my guessing game</h1>
+    <h1>Welcome to the Guessing Game</h1>
 
     <?php
-    // Correct number for full credit
-    $correctnumber = 30;
+    // Define the correct number (must be 30 as per the assignment)
+    $correct_number = 30;
 
-    // Check if the 'guess' parameter exists
+    // Check if the 'guess' parameter is set in the URL (via GET request)
     if (isset($_GET['guess'])) {
+        // Sanitize the input to avoid security issues
+        $guess = $_GET['guess'];
+
         // Check if the guess is a valid number
-        if (!is_numeric($_GET['guess'])) {
-            echo "Your guess is not a number";
-        } 
-        // Check if the guess is too low
-        else if ($_GET['guess'] < $correctnumber) {
-            echo "Your guess is too low";
-        } 
-        // Check if the guess is too high
-        else if ($_GET['guess'] > $correctnumber) {
-            echo "Your guess is too high";
-        } 
-        // If the guess is correct
-        else if ($_GET['guess'] == $correctnumber) {
-            echo "Congratulations - You are right";
+        if (!is_numeric($guess)) {
+            echo "<p>Your guess is not a valid number.</p>";
+        } else {
+            $guess = intval($guess);
+
+            // Compare the guess to the correct number
+            if ($guess < $correct_number) {
+                echo "<p>Your guess is too low.</p>";
+            } elseif ($guess > $correct_number) {
+                echo "<p>Your guess is too high.</p>";
+            } else {
+                echo "<p>Congratulations - You are right!</p>";
+            }
         }
     } else {
-        // If the 'guess' parameter is missing
-        echo "Missing guess parameter <br> Your guess is too short";
+        echo "<p>Please enter a guess.</p>";
     }
     ?>
+
+    <!-- Form for submitting the guess -->
+    <form method="get">
+        <label for="guess">Enter your guess:</label>
+        <input type="text" name="guess" id="guess">
+        <input type="submit" value="Submit Guess">
+    </form>
 </body>
 </html>
